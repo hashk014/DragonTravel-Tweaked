@@ -1,0 +1,9 @@
+{
+  "name": "dragontravel-reforged-test-clients",
+  "private": true,
+  "version": "2.0.0",
+  "dependencies": {
+    "minecraft-protocol": "1.68.0",
+    "minecraft-data": "3.117.0"
+  }
+}

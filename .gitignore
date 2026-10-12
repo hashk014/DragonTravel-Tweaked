@@ -39,3 +39,14 @@
 /src/main/resources/lang
 
 lib/*.jar
+
+# Reforged tooling and disposable server worlds
+/.tools/
+/test-servers/
+/demo-server/
+/release/
+/tools/runtime-config.json
+**/__pycache__/
+/legacy/target/
+/.workspace-initial-git/
+/.publish/

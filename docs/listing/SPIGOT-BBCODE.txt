@@ -1,0 +1,112 @@
+[CENTER][IMG]https://raw.githubusercontent.com/hashk014/DragonTravel-Tweaked/codex/dragontravel-reforged/assets/listing/banner.png[/IMG][/CENTER]
+
+[SIZE=6][B]DragonTravel Reforged[/B][/SIZE]
+
+[B]Turn the journey into part of the adventure.[/B]
+
+Give your players a ride on a real Ender Dragon. Connect towns with stations, build scenic tours, let players fly home, and add stationary dragons to your server's landmarks.
+
+DragonTravel Reforged revives the original DragonTravel as a Java server plugin, with English messages, an editor available in game, and one JAR tested across 55 Paper versions from [B]1.7.10 to 26.3[/B]. Players need no client mod or resource pack.
+
+[SIZE=5][B]What you can do[/B][/SIZE]
+
+[LIST]
+[*][B]Dragon transport:[/B] take off, cruise and land at a station, with progress and estimated arrival time.
+[*][B]Scenic routes:[/B] create tours with up to 64 waypoints using commands in game.
+[*][B]Destination menu:[/B] browse stations and routes in a paginated inventory menu.
+[*][B]Personal homes:[/B] save a home and return to it by dragon.
+[*][B]Player travel:[/B] visit another player, with an opt-out for privacy.
+[*][B]Travel signs:[/B] create clickable signs for stations and scenic flights.
+[*][B]Decorative dragons:[/B] place stationary dragons at hubs and landmarks, with locations restored after restart.
+[*][B]Flexible fares:[/B] offer free flights, charge ordinary resources, or use an optional Vault economy provider.
+[*][B]Server controls:[/B] configure speed, altitude, cooldowns, distance limits, active dragon limits, disabled worlds and station-only departures.
+[*][B]Interrupted journey recovery:[/B] save departure before mounting and return players safely when they reconnect after an interrupted journey. If departure is unsafe, recovery uses world spawn.
+[*][B]Protection hooks:[/B] integrate other plugins with cancellable pre-flight and journey-end events.
+[/LIST]
+
+The travel dragons have destructive AI suppressed. Players receive protection during flight and temporary protection against fall damage afterwards. Landing checks require two clear blocks above solid ground.
+
+[SIZE=5][B]Installation[/B][/SIZE]
+
+[LIST]
+[*]Stop your server and back up its worlds and configuration.
+[*]Remove any older DragonTravel JAR; both versions use [FONT=Courier New]/dt[/FONT].
+[*]Put [FONT=Courier New]DragonTravel-Reforged-2.0.0.jar[/FONT] in your server's [FONT=Courier New]plugins/[/FONT] directory.
+[*]Start the server, then join as an operator.
+[*]Stand on solid ground and run [FONT=Courier New]/dt setstat village[/FONT].
+[*]Move to another safe location and run [FONT=Courier New]/dt travel village[/FONT].
+[/LIST]
+
+Open [FONT=Courier New]/dt menu[/FONT] to choose a destination. Settings are saved in [FONT=Courier New]plugins/DragonTravelReforged/config.yml[/FONT]. Speed is measured in blocks per second. Travel between worlds is disabled by default.
+
+[SIZE=5][B]Useful commands[/B][/SIZE]
+
+[CODE]
+/dt help                         Show command help
+/dt menu                         Open the destination menu
+/dt stations                     List stations
+/dt routes                       List scenic routes
+/dt travel <station>             Fly to a station
+/dt flight <route>               Follow a scenic route
+/dt sethome                      Save your home
+/dt home                         Fly home
+/dt ptravel <player>             Fly to another player
+/dt ptoggle                      Allow or block travel to you
+/dt status                       Check flight progress
+/dt stop                         Cancel and return to departure
+[/CODE]
+
+
+Administrators can manage stations, routes and decorative dragons:
+
+[CODE]
+/dt setstat <name>
+/dt remstat <name>
+/dt createflight <name>
+/dt setwp
+/dt remlastwp
+/dt saveflight
+/dt showflight <name>
+/dt remflight <name>
+/dt addstatdragon <name> [display-name]
+/dt remstatdragon <name>
+/dt ctravel <x> <y> <z> [world]
+/dt reload
+/dt importlegacy
+[/CODE]
+
+
+Use names containing 1-32 ASCII letters, digits, [FONT=Courier New]_[/FONT] or [FONT=Courier New]-[/FONT]. Routes stay in one world. Intermediate waypoints may be in the air; the final waypoint must be a safe landing. Sneaking or [FONT=Courier New]/dt stop[/FONT] returns the rider to departure.
+
+[SIZE=5][B]Permissions and payments[/B][/SIZE]
+
+Basic use, home and player travel permissions are enabled by default. Administration, coordinate travel and fare bypass default to operators. Control individual destinations with [FONT=Courier New]dragontravel.destination.<name>[/FONT] and [FONT=Courier New]dragontravel.route.<name>[/FONT], removing the corresponding wildcard permission when restricting access.
+
+Flights are free by default. Item fares consume only ordinary resources without custom metadata. Voluntary cancellation keeps the fare; technical interruptions refund it. The recovery journal protects player position and does not guarantee a financial refund after a forced process shutdown. Vault mode requires Vault and an installed economy provider.
+
+[SIZE=5][B]Compatibility and testing[/B][/SIZE]
+
+[B]One JAR passed tests on 55 individual Paper versions from 1.7.10 through 26.3.[/B] These were actual server runs with connected network clients, covering dragon mounting, physical travel, arrival, homes, scenic routes, item fares, cancellation, refunds, permission checks, protection vetoes, restart and recovery after forcibly terminating the server during flight. Eight unit tests also passed.
+
+Paper [B]26.3 build 174 was a beta build[/B] in this matrix. Some historical builds were alpha or beta too. The exact versions, builds, channels and results are recorded in the [URL=https://github.com/hashk014/DragonTravel-Tweaked/blob/codex/dragontravel-reforged/docs/reforged/COMPATIBILITY.md]compatibility report[/URL].
+
+The plugin targets Bukkit/Spigot/Paper APIs; runtime results apply to the listed Paper builds. Unlisted patches, other server distributions and third-party plugin combinations are not automatically covered. Use the Java runtime required by your server. [B]Folia is unsupported.[/B] The network tests do not render a Minecraft window, and Vault with a real economy provider needs separate integration testing.
+
+[SIZE=5][B]Upgrading from DragonTravel[/B][/SIZE]
+
+[FONT=Courier New]/dt importlegacy[/FONT] reads stations and flights from [FONT=Courier New]plugins/DragonTravel/databases/[/FONT], preserves those files, and avoids overwriting existing names. Set your home again with [FONT=Courier New]/dt sethome[/FONT]; historical homes stored by player name are not automatically assigned to UUIDs.
+
+Reforged has a new addon API. Historical Factions, Towny, Heroes and anticheat integrations, the old binary API, and every original setting or permission are not reproduced. See the [URL=https://github.com/hashk014/DragonTravel-Tweaked/blob/codex/dragontravel-reforged/README.md]documentation[/URL] for migration details.
+
+[SIZE=5][B]Source, support and credits[/B][/SIZE]
+
+[LIST]
+[*][URL=https://github.com/hashk014/DragonTravel-Tweaked/tree/codex/dragontravel-reforged]Source code[/URL]
+[*][URL=https://github.com/hashk014/DragonTravel-Tweaked/blob/codex/dragontravel-reforged/README.md]Documentation[/URL]
+[*][URL=https://github.com/hashk014/DragonTravel-Tweaked/issues]Report an issue[/URL]
+[*][URL=https://github.com/hashk014/DragonTravel-Tweaked/blob/codex/dragontravel-reforged/docs/reforged/API.md]Addon API[/URL]
+[/LIST]
+
+Original DragonTravel by Philipp "Phiwa" Vesper and Oliver "Seyah" Hayes. Reforged maintained by [B]hash014[/B]. Released under the original [B]BSD 2-Clause license[/B], with historical source and attribution preserved.
+
+Reforged code and this listing were developed with generative AI assistance. The banner and icon are AI-generated promotional illustrations, not gameplay screenshots.

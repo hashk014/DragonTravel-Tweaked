@@ -1,0 +1,21 @@
+{
+  "createdAt": "2026-10-12T20:34:04.508783+00:00",
+  "aiGenerated": false,
+  "license": "CC-BY-3.0",
+  "icon": {
+    "path": "icon.png",
+    "author": "Lorc",
+    "source": "https://game-icons.net/1x1/lorc/dragon-head.html",
+    "sha256": "d2f8370925c40a62e234bc92142352a14c26b25f2f4e4babe542b22d915d2018",
+    "hostedUrl": "https://cdn.modrinth.com/data/KWDoVwc0/c583b429beb2cb03e0a2493c656258e447f0821d_96.webp"
+  },
+  "banner": {
+    "path": "banner.jpg",
+    "author": "David Revoy",
+    "source": "https://commons.wikimedia.org/wiki/File:Durian_-_Sintel-wallpaper-dragon.jpg",
+    "sha256": "e2266814d231ed777bab473e9c9c8adbb95434f935888a5e745d61eb8442eb61",
+    "hostedUrl": "https://cdn.modrinth.com/data/KWDoVwc0/images/92f1fe2b49ff88e58c8c613f75a58815055d0ade.jpg",
+    "featured": true
+  },
+  "visualModifications": "None"
+}
