@@ -7,13 +7,14 @@ Prepared on October 12, 2026. All listing copy and artwork text are in English. 
 - `DESCRIPTION.md`: the complete Markdown description, including the banner.
 - `CURSEFORGE.md`: the same description for CurseForge's Markdown editor.
 - `TEXT-ONLY.md`: the description without generated artwork for text-only listings.
-- `MODRINTH.md`: the image-free description submitted to Modrinth, with AI and derivative-work disclosure.
+- `MODRINTH.md`: the description submitted to Modrinth, with existing artist-created artwork, credits, and AI and derivative-work disclosure for the code and text.
 - `publication.json`: stable Modrinth project/version IDs, artifact hashes and the last verified submission state.
 - `SPIGOT-BBCODE.txt`: the description converted to Spigot BBCode.
 - `METADATA.json`: the name, summary, tags, license and project links.
 - `../../assets/listing/banner.png`: landscape promotional banner.
 - `../../assets/listing/icon.png`: square project icon.
 - `../../assets/listing/PROMPTS.md`: exact generation prompts and provenance.
+- `../../assets/listing/modrinth/`: existing artist-created icon and featured illustration uploaded to Modrinth, with their separate CC BY 3.0 credits and manifest.
 
 ## Project fields
 
@@ -47,7 +48,7 @@ For other editors that support Markdown, start with `DESCRIPTION.md` or `TEXT-ON
 
 ## Modrinth
 
-Modrinth supports [GitHub Flavored Markdown](https://support.modrinth.com/en/articles/8801962-advanced-markdown-formatting), but its [AI policy](https://support.modrinth.com/en/articles/16551575-disclosure-and-usage-of-ai) prohibits AI-generated images anywhere on a project page, including branding. **Do not upload this kit's banner or icon to Modrinth.**
+Modrinth supports [GitHub Flavored Markdown](https://support.modrinth.com/en/articles/8801962-advanced-markdown-formatting), but its [AI policy](https://support.modrinth.com/en/articles/16551575-disclosure-and-usage-of-ai) prohibits AI-generated images anywhere on a project page, including branding. **Do not upload the generated `assets/listing/banner.png` or `assets/listing/icon.png` to Modrinth.** The separate `assets/listing/modrinth/` images are existing artist-created artwork under CC BY 3.0; they have been uploaded as the project icon and featured gallery image. Keep the credits in `MODRINTH.md` and `CREDITS.md` when reusing them.
 
 `TEXT-ONLY.md` provides copy without generated artwork, but it is not a guarantee of listing eligibility. This Reforged implementation and description substantially used generative AI. Modrinth requires the relevant content disclosure and may restrict primarily AI-generated projects, including new work in forks, to unlisted status or reject public publication. Removing the images does not remove the code/content eligibility issue. Disclose the Reforged contribution accurately; this kit makes no claim that the original DragonTravel authors used AI.
 

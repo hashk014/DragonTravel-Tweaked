@@ -9,7 +9,7 @@
     "versionUrl": "https://modrinth.com/plugin/dragontravel-reforged/version/ehJh6XIM",
     "status": "processing",
     "requestedVisibility": "unlisted",
-    "verifiedAt": "2026-10-12T20:23:04.372877+00:00",
+    "verifiedAt": "2026-10-12T20:36:49.225152+00:00",
     "fileSha256": "9341d0746b6d024d00dacabaa290949a312b07150c2416eb7d2b0317a01df64c",
     "fileSha512": "7f0b218a6838efa62e9ef0c7744737387ff59f566af84c2beae9f9aa14c00dc9862071bd2d261f89e6fbe3d63ea24e2aec7f63171c13d7a3f7b87c2131daf6e6",
     "loaders": [
@@ -74,7 +74,15 @@
     ],
     "generatedImagesUploaded": false,
     "aiDisclosure": true,
-    "derivativeWorkDisclosure": true
+    "derivativeWorkDisclosure": true,
+    "iconUrl": "https://cdn.modrinth.com/data/KWDoVwc0/c583b429beb2cb03e0a2493c656258e447f0821d_96.webp",
+    "featuredArtworkUrl": "https://cdn.modrinth.com/data/KWDoVwc0/images/92f1fe2b49ff88e58c8c613f75a58815055d0ade.jpg",
+    "artworkLicense": "CC-BY-3.0",
+    "issueTrackerEnabled": true,
+    "artworkCredits": {
+      "icon": "Lorc / Game-icons.net",
+      "featuredIllustration": "David Revoy / Sintel / Blender Foundation"
+    }
   },
   "curseforge": {
     "mutated": false,

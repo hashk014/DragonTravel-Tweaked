@@ -1,10 +1,20 @@
 # DragonTravel Reforged
 
+![Adventure Awaits - fantasy dragon artwork by David Revoy](https://cdn.modrinth.com/data/KWDoVwc0/images/92f1fe2b49ff88e58c8c613f75a58815055d0ade.jpg)
+
 **Turn the journey into part of the adventure.**
 
 Give your players a ride on a real Ender Dragon. Connect towns with stations, build scenic tours, let players fly home, and add stationary dragons to your server's landmarks.
 
 DragonTravel Reforged revives the original DragonTravel as a Java server plugin, with English messages, an editor available in game, and one JAR tested across 55 Paper versions from **1.7.10 to 26.3**. Players need no client mod or resource pack.
+
+| Ride the dragon | Build your sky routes | Keep setup simple |
+| --- | --- | --- |
+| Real Ender Dragon transport between stations and homes. | Scenic flights with up to 64 waypoints and an editor in game. | One server plugin. Players join with their usual Minecraft client. |
+
+**Start with `/dt setstat village`, then take your first flight with `/dt travel village`.**
+
+*Featured image: promotional fantasy artwork by David Revoy. See artwork credits below.*
 
 ## What you can do
 
@@ -99,6 +109,10 @@ Reforged has a new addon API. Historical Factions, Towny, Heroes and anticheat i
 
 Original DragonTravel by Philipp "Phiwa" Vesper and Oliver "Seyah" Hayes. Reforged maintained by **hash014**. Released under the original **BSD 2-Clause license**, with historical source and attribution preserved.
 
+### Artwork credits
+
+- Icon: [Dragon head](https://game-icons.net/1x1/lorc/dragon-head.html) by **Lorc**, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Original white-on-black artwork.
+- Featured illustration: [Durian - Sintel-wallpaper-dragon](https://commons.wikimedia.org/wiki/File:Durian_-_Sintel-wallpaper-dragon.jpg) by **David Revoy**, for the Blender Foundation's Sintel project, [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/). Original artwork, used as promotional fantasy illustration. The artwork's creators do not endorse this plugin.
 
 ## AI and derivative-work disclosure
 

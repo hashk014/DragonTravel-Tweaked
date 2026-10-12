@@ -89,5 +89,12 @@
     "26.3"
   ],
   "iconPath": "assets/listing/icon.png",
-  "bannerPath": "assets/listing/banner.png"
+  "bannerPath": "assets/listing/banner.png",
+  "modrinthArtwork": {
+    "iconPath": "assets/listing/modrinth/icon.png",
+    "bannerPath": "assets/listing/modrinth/banner.jpg",
+    "creditsPath": "assets/listing/modrinth/CREDITS.md",
+    "aiGenerated": false,
+    "license": "CC-BY-3.0"
+  }
 }
