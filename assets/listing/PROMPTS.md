@@ -29,4 +29,3 @@ Composition/framing: Strong central dragon face as focal point. The entire emble
 Text: None.
 Constraints: One dragon only, no rider, no landscape, no letters, no words, no platform logos, no official Minecraft logo, no copied project avatar, no watermark, no UI, no tiny ornaments or intricate scenery. Opaque background. Strong shape recognition, purposeful contrast and restrained glow.
 ```
-
