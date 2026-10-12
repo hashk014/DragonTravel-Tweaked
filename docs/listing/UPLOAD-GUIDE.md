@@ -1,12 +1,14 @@
 # Listing kit upload guide
 
-Prepared on October 12, 2026. All listing copy and artwork text are in English. These files prepare a listing; no CurseForge, Modrinth or Spigot resource has been submitted or published.
+Prepared on October 12, 2026. All listing copy and artwork text are in English. Modrinth version 2.0.0 has been uploaded and submitted for moderation with unlisted visibility requested. Its last verified status is recorded in `publication.json`; submission is not public approval. The user reported that CurseForge was already published separately. This workflow made no CurseForge changes or Spigot submission.
 
 ## Files
 
 - `DESCRIPTION.md`: the complete Markdown description, including the banner.
 - `CURSEFORGE.md`: the same description for CurseForge's Markdown editor.
 - `TEXT-ONLY.md`: the description without generated artwork for text-only listings.
+- `MODRINTH.md`: the image-free description submitted to Modrinth, with AI and derivative-work disclosure.
+- `publication.json`: stable Modrinth project/version IDs, artifact hashes and the last verified submission state.
 - `SPIGOT-BBCODE.txt`: the description converted to Spigot BBCode.
 - `METADATA.json`: the name, summary, tags, license and project links.
 - `../../assets/listing/banner.png`: landscape promotional banner.
