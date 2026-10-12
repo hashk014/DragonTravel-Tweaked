@@ -1,0 +1,18 @@
+{
+  "banner.png": {
+    "width": 2172,
+    "height": 724,
+    "bytes": 2154827,
+    "sha256": "768fc1aeb85bfc059f98a4660802c4e8320833071a07e24dbf2bcab35f32760c",
+    "generatedWith": "built-in image_gen",
+    "aiGenerated": true
+  },
+  "icon.png": {
+    "width": 1254,
+    "height": 1254,
+    "bytes": 1756605,
+    "sha256": "d40e874c48a82965fe56f46703b61624cf94db91353d42faa382bf8a91a21879",
+    "generatedWith": "built-in image_gen",
+    "aiGenerated": true
+  }
+}
