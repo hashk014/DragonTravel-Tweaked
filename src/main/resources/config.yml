@@ -8,7 +8,7 @@ max-journey-seconds: 1800
 cooldown-seconds: 10
 require-safe-landing: true
 allow-cross-world: false
-dragon-name: '&5Dragon Reforged'
+dragon-name: '&5Reforged Dragon'
 progress-seconds: 5
 station-only: false
 station-radius: 12.0

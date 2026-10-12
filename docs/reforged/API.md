@@ -1,4 +1,4 @@
-# API Reforged
+# Reforged API
 
 Use the public API synchronously on Bukkit's server thread. Depend on `DragonTravelReforged` in your addon `plugin.yml` and use the Reforged JAR as a provided compile dependency.
 

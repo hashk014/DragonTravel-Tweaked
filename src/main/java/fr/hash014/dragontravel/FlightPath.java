@@ -79,7 +79,7 @@ public final class FlightPath {
 
   public static String id(String value) {
     if (value == null || !value.matches("[A-Za-z0-9_-]{1,32}"))
-      throw new IllegalArgumentException("Nom : 1-32 lettres, chiffres, _ ou -");
+      throw new IllegalArgumentException("Name: 1-32 ASCII letters, digits, _ or -");
     return value.toLowerCase(Locale.ROOT);
   }
 }

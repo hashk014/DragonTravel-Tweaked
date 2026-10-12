@@ -82,7 +82,7 @@ public final class TravelStore {
     List<Location> result = new ArrayList<Location>();
     for (String key : keys("routes." + id + ".points")) {
       Location p = get(data, "routes." + id + ".points." + key);
-      if (p == null) throw new IllegalArgumentException("Monde de l'itinéraire indisponible");
+      if (p == null) throw new IllegalArgumentException("Route world unavailable");
       result.add(p);
     }
     return result;

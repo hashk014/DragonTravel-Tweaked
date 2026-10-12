@@ -1,7 +1,7 @@
 # Compatibility — DragonTravel Reforged 2.0.0
 
-Tested at (UTC): 2026-10-12T18:14:04.427345+00:00
-JAR SHA-256: `04229dc109f19b2745c305fd223d214717a92cc59963311b1898e986e0a0a5e7`
+Tested at (UTC): 2026-10-12T18:43:13.194771+00:00
+JAR SHA-256: `9341d0746b6d024d00dacabaa290949a312b07150c2416eb7d2b0317a01df64c`
 
 All rows use this exact JAR. These are real isolated Paper server boots and connected protocol clients. Each run includes mounting, travel, home, scenic route, item fares, cancellation, refund, permission/protection veto, durable data, restart and reconnect. The process is killed during a fourth real flight when indicated.
 

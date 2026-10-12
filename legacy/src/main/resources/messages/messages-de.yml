@@ -1,149 +1,150 @@
-#                 ANLEITUNG
-#          zur Nutzung dieser Datei
+# English translation; historical locale filename retained for compatibility.
+#                 INSTRUCTIONS
+#          for the usage of this file
 #
-# Es gibt ein paar dinge, die du beachten solltest, wenn du Änderungen an dieser Datei vornimmst.
+# There are a few things you should know about when modifying this file.
 # 
-# 1. NUTZE KEINE TABS
-#       Sie führen dazu, dass die Datei für den Server unlesbar wird.
-# 2. EINRÜCKUNGEN SIND WICHTIG
-#       Es ist wichtig, dass alle Einrückungen so bleiben, wie sie sind!
-# 3. EINFACHE ANFÜHRUNGSZEICHEN WERDEN BENÖTIGT
-#       Die Anführungszeichen am Anfang und am Ende jedes Satzes müssen unbedingt gesetzt werden.
-# 4. APOSTROPHE
-#       Um ein Apostroph zu nutzen, schreibe stattdessen zwei hin.
-#       Du schreibst also zum Beispiel
-#           ExampleMessage: 'Wie geht''s?'
-#       Um die Nachricht
-#           Wie geht's?
-#       im Spiel zu erhalten.
-# 5. FARB-/FORMAT-CODES SIND ERLAUBT
-#       Du kannst die normalen Farb-/Format-Codes von Minecraft nutzen
-#       (z.B. &a für grünen, &c für roten und &f für weißen Text).
-#       Eine vollständige Liste der Codes findest du unter
-#       http://www.minecraftwiki.net/wiki/Formatting_codes (dort wird ein '§' genutzt, du musst in DragonTravel ein '&' nutzen!)
-# 6. VARIABLEN IN NACHRICHTEN
-#       All Variablen (gekennzeichnet durch geschweifte Klammern {}, z.B. {playername})
-#       werden im Spiel vom Plugin automatisch durch den korrekten Wert ersetzt.
-#       Die verfügbaren Variablen sind abhängig von der jeweiligen Nachricht, die Standardnachricht (in der messages-en.yml)
-#       nutzt immer alle verfügbaren Nachrichten.
-#       Es ist erlaubt Variablen auszulassen.
-# 7. ÄNDERE NICHTS AM 'File'-ABSCHNITT
-#       Er wird ausschließlich vom Plugin genutzt, um festzustellen, ob du die neueste Version der messages.yml hast.
-#        Eine Änderung an diesem Abschnitt kann deinen Server zum Absturz bringen.
-# 8. VIEL SPAß MIT DEM PLUGIN
-#       Sollte klar sein... ;)
-#       Feedback jeder Art ist gerne gesehen, du kannst gerne neue Features vorschlagen
-#       und melde bitte alle Bugs, die du findest, sonst kann ich sie nicht beheben. ;)
+# 1. DO NOT USE TABS
+#       They will corrupt the file and let your server crash.
+# 2. INDENTATION IS IMPORTANT
+#       It is important that you keep the indentation the way it is!
+# 3. SINGLE QUOTES ARE NEEDED
+#       The single quotes at the beginning and the end of each message are necessary.
+# 4. APOSTROPHES
+#       To use an apostrophe, you need to put two of them instead.
+#       This means, you would put
+#           ExampleMessage: 'I like Phiwa''s plugin.'
+#       To get the message
+#           I like Phiwa's plugin.
+#       ingame.
+# 5. COLOR-/FORMATTING-CODES ARE ALLOWED
+#       You can use the normal color/formatting-codes used in Minecraft
+#       (e.g. &a for green, &c for red and &f for white text).
+#       You can find a full list of the codes at
+#       http://www.minecraftwiki.net/wiki/Formatting_codes (they use an '§', use an '&' in DragonTravel!)
+# 6. VARIABLES IN MESSAGES
+#       All variables (marked with curly braces, e.g. {playername})
+#       are automatically replaced with the correct value by the plugin ingame.
+#       The available variables depend on the message, the default message (in the messages-en.yml)
+#       always uses all variables available in the messages.
+#       It is possible to leave variables out in a message.
+# 7. DO NOT TOUCH THE 'File'-PARAGRAPH
+#       It is only used by the plugin to check if you are running the latest version of the messages.yml.
+#       Changing it might cause a crash of your server!
+# 8. ENJOY THE PLUGIN
+#       Should be quite obvious... ;)
+#       Any feedback is appreciated, feel free to propose new features
+#       and please report all bugs you find, otherwise I can't fix them. ;)
 
 File:
     Version: 1.2
-    Language: 'German'
-    
+    Language: 'English'
+
 Messages:
     General:
         Successful:
-            AddedStatDragon: '&aStationärer Drache &f{dragonname}&a wurde erfolgreich erstellt.'
-            RemovedStatDragon: '&aStationärer Drache &f{dragonname}&a wurde erfolgreich entfernt.'
-            DismountedHere: '&aDu bist von deinem Drachen abgestiegen.'
-            DismountedToStart: '&aDu hast deine Reise abgebrochen und wirst zum Ausgangspunkt zurück gebracht.'
-            ToggledPTravelOn: '&aDu erlaubst nun Spieler-Reisen zu dir.'
-            ToggledPTravelOff: '&aDu erlaubst nun keine Spieler-Reisen mehr zu dir.'
-        Error:    
-            NoConsole: '&cDie Konsole kann diesen Befehl, in dieser Form, nicht nutzen.'
-            NameTaken: '&cDieser Name ist bereits vergeben.'        
-            NoPermission: '&cDu hast nicht die erforderliche Berechtigung um dies zu nutzen.'
-            NotMounted: '&cDu sitzt auf keinem Drachen.'
-            RequiredItemMissing: '&cDu hast nicht den benötigten Gegenstand in deinem Inventar, um das Plugin zu nutzen.'       
-            DatabaseCorrupted: '&cDie Datenbank ist beschädigt, deshalb konnte ein benötigter Eintrag nicht geladen werden. Bitte informiere den Admin.' 
-            ReachedDragonLimit: '&cDer Server hat bereits sein Drachen-Limit erreicht, du kannst keinen weiteren Drachen spawnen. Bitte warte bis ein/e andere/r Spieler/in absteigt.' 
-            RequireSkyLightPlayer: '&cDu musst direkten Zugang zum Himmel haben, damit der Drache starten kann!'
-            RequireSkyLightDestination: '&cEs dürfen sich zwischen deinem Ziel und dem Himmel keine Hindernisse befinden, sonst kann der Drache nicht landen!'
-            BelowMinMountHeight: '&cDu befindest dich unter der minimalen Höhe für das besteigen eines Drachens. Die minimale Höhe beträgt &f{minheight}&c.'
-            DamageCooldown: '&cDu musst &f{seconds} &cweitere Sekunden warten bis du wieder einen Drachen besteigen kannst.'
-            WorldNotFound: '&cDie angegebene Welt existiert nicht.'
-            WorldOnBlacklistTo: '&cDie Zielwelt ist auf der Reise-Blacklist.'
-            WorldOnBlacklistFrom: '&cDie aktuelle Welt ist auf der Reise-Blacklist.'
-            StatDragonNotExists: '&cEs existiert kein stationärer Drache mit dem Namen &f{name}&c.'
-            CommandPrevented: '&cDieser Befehl ist auf einem Drachen nicht nutzbar.'
+            AddedStatDragon: '&aSuccessfully created stationary dragon &f{dragonname}&a.'
+            RemovedStatDragon: '&aSuccessfully removed stationary dragon &f{dragonname}&a.'
+            DismountedHere: '&aYou successfully dismounted your dragon.'
+            DismountedToStart: '&aYou cancelled your journey and were brought back to your starting-point.'
+            ToggledPTravelOn: '&aYou now allow player-travels to you.'
+            ToggledPTravelOff: '&aYou now don''t allow player-travels to you.'
+        Error:
+            NoConsole: '&cThe console may not use this command in that way.'
+            NameTaken: '&cThat name is already taken.'
+            NoPermission: '&cYou do not have the permission to use this.'
+            NotMounted: '&cYou are not mounted.'
+            RequiredItemMissing: '&cYou do not have the required item in your inventory to use the plugin.'        
+            RequireSkyLightPlayer: '&cYou must have access to sky light for the dragon to be able to start!'
+            RequireSkyLightDestination: '&cThere must not be any obstacles between your destination and the sky, otherwise the dragon would not be able to land!'
+            DatabaseCorrupted: '&cThe database is corrupted, could not load the entry. Please inform the admin.'
+            ReachedDragonLimit: '&cThe server already reached its limit, you cannot spawn another dragon, please wait for another player to dismount.'
+            BelowMinMountHeight: '&cYou are below the minimum height required to mount a dragon. Minimum height is &f{minheight}&c.'
+            DamageCooldown: '&cYou must wait &f{seconds} &cmore seconds before you can mount a dragon.'
+            WorldNotFound: '&cCould not find the specified world.'
+            WorldOnBlacklistTo: '&cTarget world is on travel blacklist.'
+            WorldOnBlacklistFrom: '&cCurrent world is on travel blacklist.'
+            StatDragonNotExists: '&cThere is no stationary dragon &f{name}&c.'
+            CommandPrevented: '&cThis command is not allowed while riding a dragon.'
     Payment:
-        Free: '&aKeine Kosten für dich, auf gehts!'
+        Free: '&aNo charge for you, hop on!'
         Resources:
             Successful:
-                WithdrawMessage: '&aVerabschiede dich von &f{amount}&a Gold-Nuggets.'
+                WithdrawMessage: '&aSay bye to &f{amount}&a gold nugget(s).'
             Error:
-                NotEnoughResources: '&cDu hast nicht genug Ressourcen.'
+                NotEnoughResources: '&cYou do not have enough resources.'
         Economy:
             Successful:
-                WithdrawMessage: '&aVerabschiede dich von &f{amount}&a Münzen.'
+                WithdrawMessage: '&aSay bye to &f{amount}&a coins.'
             Error:
-                NotEnoughMoney: '&cDu hast nicht genug Münzen.'               
+                NotEnoughMoney: '&cYou do not have enough money.'               
     Signs:
         Successful:
-            SignCreated: '&aDas Schild wurde erfolgreich erstellt.'       
+            SignCreated: '&aSign was created successfully.'       
         Error:
-            SignCorrupted: '&cDas Schild ist beschädigt.'
-            NoTargetStationSpecified: '&cBitte gib eine Ziel-Station an.'
-            NoTargetFlightSpecified: '&cBitte gibt einen Flug an.'
+            SignCorrupted: '&cSign is corrupted.'
+            NoTargetStationSpecified: '&cPlease specify a travel.'
+            NoTargetFlightSpecified: '&cPlease specify a flight.'
     Flights:
         Successful:
-            StartingFlight: '&aStarte Flug &f{flightname}&a.'
-            NowInFlightCreationMode: '&aDu bist jetzt im Flug-Erstellermodus. Nutze &f/dt setwp&a um Wegpunkte zu setzen und &f/dt saveflight&a um den Flug zu speichern und den Modus zu verlassen.'
-            WaypointAdded: '&aWegpunkt erfolgreich hinzugefügt.'
-            WaypointRemoved: '&aLetzten Wegpunkt erfolgreich entfernt.'
-            FlightSaved: '&aFlug erfolgreich gespeichert.'
-            RemovedFlight: '&aFlug erfolgreich entfernt.'
-            SendingPlayer: '&aSende Spieler/in &f{playername}&a auf den Flug &f{flightname}&a.'
-            SentPlayer: '&aDu wurdest von einem Admin auf den Flug &f{flightname} &ageschickt.'
+            StartingFlight: '&aStarting flight &f{flightname}&a.'
+            NowInFlightCreationMode: '&aYou are now in flight-creation mode. Use &f/dt setwp&a to set waypoints and &f/dt saveflight&a to save the flight and exit the mode.'
+            WaypointAdded: '&aSuccessfully added a waypoint.'
+            WaypointRemoved: '&aSuccessfully removed the last waypoint.'
+            FlightSaved: '&aSuccessfully saved the flight.'
+            RemovedFlight: '&aSuccessfully removed the flight.'
+            SendingPlayer: '&aSending player &f{playername}&a on flight &f{flightname}&a.'
+            SentPlayer: '&aYou were sent on the flight &f{flightname} &aby an admin.'
         Error:
-            FlightDoesNotExist: '&cFlug existiert nicht.'
-            FlightAlreadyExists: '&cFlug existiert bereits.'
-            FlightIsInDifferentWorld: '&cFlug ist in einer anderen Welt.'
-            AlreadyInFlightCreationMode: '&cDu bist bereits im Flug-Erstellermodus.'
-            NotInFlightCreationMode: '&cDu bist nicht im Flug-Erstellermodus.'
-            AtLeastOneWaypoint: '&cDu musst mindestens einen Wegpunkt setzen.'
-            CannotDestroyMarkerByHand: '&aDu kannst Marker nicht von Hand zerstören. Nutze stattdessen &f/dt remlastwp.'
-            CouldNotfindPlayerToSend: '&cKonnte den/die Spieler/in &f{playername}&c nicht finden.'
-            OnlySigns: '&cDieser Befehl wurde vom Admin deaktiviert, nutze stattdessen Schilder zum reisen.'
+            FlightDoesNotExist: '&cFlight does not exist.'
+            FlightAlreadyExists: '&cFlight allready exists.'
+            FlightIsInDifferentWorld: '&cFlight is in a different world.'
+            AlreadyInFlightCreationMode: '&cYou already are in flight-creation mode.'
+            NotInFlightCreationMode: '&cYou are not in flight-creation mode.'
+            AtLeastOneWaypoint: '&cYou must create at least one waypoint.'
+            CannotDestroyMarkerByHand: '&cYou cannot destroy a marker by hand. Use &f/dt remlastwp &cinstead.'
+            CouldNotfindPlayerToSend: '&cCouldn''t find the player &f{playername}&c.'
+            OnlySigns: '&cThis command has been disabled by the admin, you can only use flights using signs.'
     Travels:
         Successful:
-            TravellingToRandomLocation: '&aStarte Reise zu einem zufälligen Ort.'
-            TravellingToCoordinatesSameWorld: '&aStarte Reise zu den Koordinaten &f{x}&a, &f{y}&a, &f{z}&a.'
-            TravellingToCoordinatesOtherWorld: '&aStarte Reise zu den Koordinaten &f{x}&a, &f{y}&a, &f{z}&a in Welt &f{worldname}&a.'
-            TravellingToHome: '&aStarte Reise &fnach Hause&a.'
-            TravellingToFactionHome: '&aStarte Reise zum Fraktions-Hauptquartier.'
-            TravellingToStation: '&aStarte Reise nach &f{stationname}&a.'
-            TravellingToPlayer: '&aStarte Reise zu &f{playername}&a.'
-            TravellingToTownSpawn: '&aStarte Reise zum Stadt-Spawn.'
-            HomeSet: '&aZuhause wurde gesetzt.'
-            SendingPlayer: '&aSende Spieler/in &f{playername}&a auf die Reise zur Station &f{stationname}&a.'
-            SentPlayer: '&aDu wurdest von einem Admin auf die Reise zur Station &f{stationname} &ageschickt.'
+            TravellingToRandomLocation: '&aTravelling to a random location.'
+            TravellingToCoordinatesSameWorld: '&aTravelling to coordinates &f{x}&a, &f{y}&a, &f{z}&a.'
+            TravellingToCoordinatesOtherWorld: '&aTravelling to coordinates &f{x}&a, &f{y}&a, &f{z}&a in world &f{worldname}&a.'
+            TravellingToHome: '&aTravelling to your home.'
+            TravellingToFactionHome: '&aTravelling to the faction home.'
+            TravellingToStation: '&aTravelling to &f{stationname}&a.'
+            TravellingToPlayer: '&aTravelling to &f{playername}&a.'
+            TravellingToTownSpawn: '&aTravelling to the town spawn.'
+            HomeSet: '&aHome set.'
+            SendingPlayer: '&aSending player &f{playername}&a on travel to station &f{stationname}&a.'
+            SentPlayer: '&aYou were sent on a travel to station &f{stationname} &aby an admin.'
         Error:
-            InvalidCoordinates: '&cUngültige Koordinaten.'
-            PlayerNotOnline: '&cDer/Die Spieler/in &f{playername}&c ist nicht online.'
-            NoHomeSet: '&cDu hast noch kein Zuhause gesetzt.'
-            OnlySigns: '&cDieser Befehl wurde vom Admin deaktiviert, nutze stattdessen Schilder zum reisen.'
-            WorldNotFound: '&cDie angegebene Welt konnte nicht gefunden werden.'
-            TargetPlayerDoesnotAllowPTravel: '&cDer/Die Spieler/in &f{playername}&c erlaubt keine Spieler-Reisen zu sich.'
-            CannotTravelToYourself: '&cEs macht keinen Sinn zu dir selbst zu reisen...'
-            MaxTravelDistanceExceeded: '&cDie Strecke zum Zielort ist zu groß.'
+            InvalidCoordinates: '&cInvalid Coordinates.'
+            PlayerNotOnline: '&cThe player &f{playername}&a isn''t online.'
+            NoHomeSet: '&cYou didn''t set a home yet.'
+            OnlySigns: '&cThis command has been disabled by the admin, you can only travel using signs.'
+            WorldNotFound: '&cCould not find the specified world.'
+            TargetPlayerDoesnotAllowPTravel: '&cThe player &f{playername}&a does not allow player-travels to him.'
+            CannotTravelToYourself: '&cIt doesn''t make sense to travel to yourself...'
+            MaxTravelDistanceExceeded: '&cThe distance to your destination is too big.'
     Stations:
         Successful:
-            StationCreated: '&aDie Station &f{stationname}&a wurde erstellt.'
-            StationRemoved: '&aDie Station &f{stationname}&a wurde entfernt.'
+            StationCreated: '&aSuccessfully created the station &f{stationname}&a.'
+            StationRemoved: '&aSuccessfully removed the station &f{stationname}&a.'
         Error:
-            StationAlreadyExists: '&cDie Station &f{stationname}&c existiert bereits.'
-            StationDoesNotExist: '&cDie Station &f{stationname}&c existiert nicht.'
-            NotCreateStationWithRandomstatName: '&cDu kannst keine Station mit dem Namen des Zufallsortes erstellen.'
-            NotAtAStation: '&cDu kannst nur an einer Station aufsteigen.'
-            CouldNotCreateStation: '&cKonnte die Station nicht erstellen.'
-            CouldNotRemoveStation: '&cKonnte die Station nicht entfernen.'
+            StationAlreadyExists: '&cThe station &f{stationname}&a already exists.'
+            StationDoesNotExist: '&cThe station &f{stationname}&a does not exist.'
+            NotCreateStationWithRandomstatName: '&cYou cannot create a staion with the name of the RandomDest.'
+            NotAtAStation: '&cYou must be at a station to mount a dragon.'
+            CouldNotCreateStation: '&cCouldn''t create station.'
+            CouldNotRemoveStation: '&cCouldn''t remove station.'
     Factions:
         Error:
-            FactionsNotInstalled: '&cFactions ist auf dem Server nicht installiert.'
-            NoFactionMember: '&cDu bist in keiner Fraktion.'
-            FactionHasNoHome: '&cDeine Fraktion hat kein Zuhause gesetzt.'
-            NotYourFaction: '&cDas ist nicht deine Fraktion.'
+            FactionsNotInstalled: '&cFactions is not installed on this server.'
+            NoFactionMember: '&cYou are not a member of a faction.'
+            FactionHasNoHome: '&cYour faction does not have a home-point.'
+            NotYourFaction: '&cThis is not your faction.'
     Towny:
         Error:
-            TownyNotInstalled: '&c Towny ist auf diesem Server nicht installiert.'
-            NoTown: '&c Du hast keine Stadt.'
+            TownyNotInstalled: '&c Towny is not installed on this server.'
+            NoTown: '&c You do not have a town.'

@@ -27,8 +27,7 @@ final class Fare {
       for (int i = 0; i < Math.min(36, contents.length); i++)
         if (contents[i] != null && contents[i].getType() == material && !contents[i].hasItemMeta())
           available += contents[i].getAmount();
-      if (available < count)
-        throw new IllegalArgumentException("Tarif : " + count + " " + material);
+      if (available < count) throw new IllegalArgumentException("Fare: " + count + " " + material);
       for (int i = 0; i < Math.min(36, contents.length) && count > 0; i++) {
         ItemStack s = contents[i];
         if (s == null || s.getType() != material || s.hasItemMeta()) continue;
@@ -47,17 +46,17 @@ final class Fare {
       try {
         f.economyApi = Class.forName("net.milkbowl.vault.economy.Economy");
       } catch (ClassNotFoundException ex) {
-        throw new IllegalArgumentException("Tarif Vault activé mais Vault absent");
+        throw new IllegalArgumentException("Vault fares are enabled, but Vault is not installed");
       }
       org.bukkit.plugin.RegisteredServiceProvider<?> registration =
           plugin.getServer().getServicesManager().getRegistration(f.economyApi);
       if (registration == null)
-        throw new IllegalArgumentException("Aucun fournisseur d'économie Vault");
+        throw new IllegalArgumentException("No Vault economy provider available");
       f.economy = registration.getProvider();
       double amount = plugin.getConfig().getDouble("fare.vault-cost", 10);
       Object response = f.transaction("withdrawPlayer", player, amount);
       if (!(Boolean) response.getClass().getMethod("transactionSuccess").invoke(response))
-        throw new IllegalArgumentException("Paiement refusé");
+        throw new IllegalArgumentException("Payment denied");
       f.money = amount;
     }
     return f;

@@ -147,7 +147,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     shuttingDown = true;
     if (store != null)
       for (Journey j : new ArrayList<Journey>(journeys.values()))
-        finish(j, false, "Arrêt du serveur", true);
+        finish(j, false, "Server shutdown", true);
     for (Entity e : statues.values()) e.remove();
     statues.clear();
     if (adapter != null) adapter.close();
@@ -162,17 +162,17 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
   void require(CommandSender sender, String permission) {
     if (!sender.hasPermission(permission)
         && !(permission.equals("dragontravel.admin") && sender.hasPermission("dt.admin")))
-      throw new IllegalArgumentException("Permission requise : " + permission);
+      throw new IllegalArgumentException("Required permission: " + permission);
   }
 
   Player player(CommandSender sender) {
     if (!(sender instanceof Player))
-      throw new IllegalArgumentException("Commande réservée aux joueurs");
+      throw new IllegalArgumentException("This command is only available to players");
     return (Player) sender;
   }
 
   String arg(String[] args, int index) {
-    if (index >= args.length) throw new IllegalArgumentException("Argument manquant. /dt help");
+    if (index >= args.length) throw new IllegalArgumentException("Missing argument. /dt help");
     return args[index];
   }
 
@@ -188,7 +188,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
           || sub.equals("crashfixture")
           || sub.equals("recoverycheck")) {
         if (!Boolean.getBoolean("dragontravel.reforged.test") || sender instanceof Player)
-          throw new IllegalArgumentException("Tests console uniquement, dans un serveur de test");
+          throw new IllegalArgumentException("Tests require the console on a test server");
         tests.command(sub, args);
         return true;
       }
@@ -197,13 +197,13 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         tell(
             sender,
             "/dt menu | travel <station> | flight <route> | sethome | home | stop | status |"
-                + " ptravel <joueur> | ptoggle");
+                + " ptravel <player> | ptoggle");
         if (sender.hasPermission("dragontravel.admin"))
           tell(
               sender,
-              "Admin : setstat/remstat <nom>, createflight <nom>, setwp, remlastwp, saveflight,"
-                  + " remflight <nom>, addstatdragon/remstatdragon <nom>, reload, importlegacy,"
-                  + " ctravel x y z [monde]");
+              "Admin: setstat/remstat <name>, createflight <name>, setwp, remlastwp, saveflight,"
+                  + " remflight <name>, addstatdragon/remstatdragon <name>, reload, importlegacy,"
+                  + " ctravel x y z [world]");
         return true;
       }
       if (sub.equals("travel")) {
@@ -212,14 +212,14 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         requireDestination(p, id, false);
         Location dest = TravelStore.get(store.data, "stations." + id);
         if (dest == null)
-          throw new IllegalArgumentException("Station introuvable / monde déchargé");
+          throw new IllegalArgumentException("Station not found or its world is unloaded");
         start(p, Collections.singletonList(dest), id, false);
       } else if (sub.equals("flight")) {
         Player p = player(sender);
         if (args.length > 2) {
           require(sender, "dragontravel.admin");
           p = Bukkit.getPlayerExact(args[2]);
-          if (p == null) throw new IllegalArgumentException("Joueur hors ligne");
+          if (p == null) throw new IllegalArgumentException("Player is offline");
         }
         String id = FlightPath.id(arg(args, 1));
         requireDestination(p, id, true);
@@ -228,25 +228,25 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         require(sender, "dragontravel.home");
         Player p = player(sender);
         Location loc = TravelStore.get(store.data, "homes." + p.getUniqueId());
-        if (loc == null)
-          throw new IllegalArgumentException("Définis ton domicile avec /dt sethome");
+        if (loc == null) throw new IllegalArgumentException("Set your home with /dt sethome");
         start(p, Collections.singletonList(loc), "home", false);
       } else if (sub.equals("sethome")) {
         require(sender, "dragontravel.home");
         Player p = player(sender);
         if (journeys.containsKey(p.getUniqueId()) || p.isInsideVehicle())
-          throw new IllegalArgumentException("Descends avant de définir ton domicile");
+          throw new IllegalArgumentException("Dismount before setting your home");
         validateLanding(p.getLocation());
         TravelStore.put(store.data, "homes." + p.getUniqueId(), p.getLocation());
         store.save();
-        tell(p, "Domicile enregistré");
+        tell(p, "Home saved");
       } else if (sub.equals("ptravel")) {
         require(sender, "dragontravel.player");
         Player p = player(sender), target = Bukkit.getPlayerExact(arg(args, 1));
         if (target == null
             || !p.canSee(target)
             || store.data.getBoolean("privacy." + target.getUniqueId(), false))
-          throw new IllegalArgumentException("Joueur indisponible ou voyages refusés");
+          throw new IllegalArgumentException(
+              "Player is unavailable or has disabled travel to them");
         start(p, Collections.singletonList(target.getLocation()), target.getName(), false);
       } else if (sub.equals("ptoggle")) {
         Player p = player(sender);
@@ -254,35 +254,39 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         boolean deny = !store.data.getBoolean(key, false);
         store.data.set(key, deny);
         store.save();
-        tell(p, deny ? "Voyages vers toi refusés" : "Voyages vers toi autorisés");
+        tell(
+            p,
+            deny
+                ? "Other players can no longer travel to you"
+                : "Other players can now travel to you");
       } else if (sub.equals("stop") || sub.equals("dismount")) {
         Journey j = journeys.get(player(sender).getUniqueId());
-        if (j != null) finish(j, false, "Voyage annulé", false);
-        else tell(sender, "Aucun vol en cours");
+        if (j != null) finish(j, false, "Journey cancelled", false);
+        else tell(sender, "No flight in progress");
       } else if (sub.equals("status")) {
         Journey j = journeys.get(player(sender).getUniqueId());
         tell(
             sender,
             j == null
-                ? "Aucun vol en cours"
+                ? "No flight in progress"
                 : j.label
                     + " : "
                     + percent(j)
-                    + "%, reste ~"
+                    + "%, remaining ~"
                     + (int) Math.ceil((j.path.length() - j.distance) / speed)
                     + " s");
       } else if (sub.equals("menu")) openMenu(player(sender), 0);
       else if (sub.equals("showstats") || sub.equals("stations"))
-        tell(sender, "Stations : " + store.keys("stations"));
+        tell(sender, "Stations: " + store.keys("stations"));
       else if (sub.equals("showflights") || sub.equals("routes"))
-        tell(sender, "Itinéraires : " + store.keys("routes"));
+        tell(sender, "Routes: " + store.keys("routes"));
       else if (sub.equals("showflight"))
-        tell(sender, "Étapes : " + store.route(FlightPath.id(arg(args, 1))).size());
+        tell(sender, "Waypoints: " + store.route(FlightPath.id(arg(args, 1))).size());
       else if (sub.equals("ctravel")) {
         require(sender, "dragontravel.coords");
         Player p = player(sender);
         World w = args.length > 4 ? Bukkit.getWorld(args[4]) : p.getWorld();
-        if (w == null) throw new IllegalArgumentException("Monde introuvable");
+        if (w == null) throw new IllegalArgumentException("World not found");
         Location l =
             new Location(
                 w,
@@ -298,44 +302,45 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
           validateLanding(l);
           TravelStore.put(store.data, "stations." + id, l);
           store.save();
-          tell(sender, "Station enregistrée : " + id);
+          tell(sender, "Station saved: " + id);
         } else if (sub.equals("remstat")) {
           store.data.set("stations." + FlightPath.id(arg(args, 1)), null);
           store.save();
-          tell(sender, "Station supprimée");
+          tell(sender, "Station removed");
         } else if (sub.equals("createflight")) {
           Player p = player(sender);
           editors.put(p.getUniqueId(), new Editor(FlightPath.id(arg(args, 1))));
-          tell(p, "Édition ouverte. /dt setwp à chaque étape puis /dt saveflight");
+          tell(p, "Editor opened. Use /dt setwp at each waypoint, then /dt saveflight");
         } else if (sub.equals("setwp") || sub.equals("remlastwp") || sub.equals("saveflight")) {
           Player p = player(sender);
           Editor e = editors.get(p.getUniqueId());
-          if (e == null) throw new IllegalArgumentException("/dt createflight <nom> d'abord");
+          if (e == null) throw new IllegalArgumentException("Use /dt createflight <name> first");
           if (sub.equals("setwp")) {
-            if (e.points.size() >= maxPoints) throw new IllegalArgumentException("Limite d'étapes");
+            if (e.points.size() >= maxPoints)
+              throw new IllegalArgumentException("Waypoint limit reached");
             if (!e.points.isEmpty() && !e.points.get(0).getWorld().equals(p.getWorld()))
-              throw new IllegalArgumentException("Un itinéraire doit rester dans un monde");
+              throw new IllegalArgumentException("A route must remain in one world");
             validatePoint(p.getLocation());
             e.points.add(p.getLocation());
           } else if (sub.equals("remlastwp")) {
             if (!e.points.isEmpty()) e.points.remove(e.points.size() - 1);
           } else {
-            if (e.points.isEmpty()) throw new IllegalArgumentException("Aucune étape");
+            if (e.points.isEmpty()) throw new IllegalArgumentException("No waypoints");
             validateLanding(e.points.get(e.points.size() - 1));
             store.route(e.id, e.points);
             store.save();
             editors.remove(p.getUniqueId());
           }
-          tell(p, e.points.size() + " étapes");
+          tell(p, e.points.size() + " waypoints");
         } else if (sub.equals("remflight")) {
           store.data.set("routes." + FlightPath.id(arg(args, 1)), null);
           store.save();
-          tell(sender, "Itinéraire supprimé");
+          tell(sender, "Route removed");
         } else if (sub.equals("addstatdragon")) {
           String id = FlightPath.id(arg(args, 1));
           if (!store.data.isConfigurationSection("statues." + id)
               && store.keys("statues").size() >= maxDragons)
-            throw new IllegalArgumentException("Limite de dragons décoratifs");
+            throw new IllegalArgumentException("Decorative dragon limit reached");
           Location l = player(sender).getLocation();
           validatePoint(l);
           TravelStore.put(store.data, "statues." + id, l);
@@ -345,14 +350,14 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
           statues.put(
               id,
               adapter.spawn(l, args.length > 2 ? args[2] : getConfig().getString("dragon-name")));
-          tell(sender, "Dragon décoratif enregistré");
+          tell(sender, "Decorative dragon saved");
         } else if (sub.equals("remstatdragon")) {
           String id = FlightPath.id(arg(args, 1));
           Entity e = statues.remove(id);
           if (e != null) e.remove();
           store.data.set("statues." + id, null);
           store.save();
-          tell(sender, "Dragon décoratif supprimé");
+          tell(sender, "Decorative dragon removed");
         } else if (sub.equals("reload")) {
           String previous = getConfig().saveToString();
           reloadConfig();
@@ -363,13 +368,13 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
             readSettings();
             throw ex;
           }
-          tell(sender, "Configuration rechargée");
+          tell(sender, "Configuration reloaded");
         } else if (sub.equals("importlegacy")) importLegacy(sender);
         else if (sub.equals("remdragons")) {
           for (Journey j : new ArrayList<Journey>(journeys.values()))
-            finish(j, false, "Annulation administrative", true);
-          tell(sender, "Vols arrêtés");
-        } else throw new IllegalArgumentException("Commande inconnue. /dt help");
+            finish(j, false, "Cancelled by an administrator", true);
+          tell(sender, "Flights stopped");
+        } else throw new IllegalArgumentException("Unknown command. /dt help");
       }
     } catch (Exception ex) {
       tell(sender, ex.getMessage() == null ? ex.getClass().getSimpleName() : ex.getMessage());
@@ -384,26 +389,26 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     if (!p.hasPermission("dragontravel." + prefix + ".*")
         && !p.hasPermission("dragontravel." + prefix + "." + id)
         && !p.hasPermission("dragontravel.admin"))
-      throw new IllegalArgumentException("Destination non autorisée");
+      throw new IllegalArgumentException("You do not have permission to use this destination");
   }
 
   void validatePoint(Location l) {
-    if (l == null || l.getWorld() == null) throw new IllegalArgumentException("Monde indisponible");
+    if (l == null || l.getWorld() == null) throw new IllegalArgumentException("World unavailable");
     new FlightPath.Point(l.getX(), l.getY(), l.getZ());
     if (Math.abs(l.getX()) > 29999900
         || Math.abs(l.getZ()) > 29999900
         || l.getY() < minHeight(l.getWorld()) + 2
         || l.getY() > l.getWorld().getMaxHeight() - 12)
-      throw new IllegalArgumentException("Coordonnées hors des limites du monde");
+      throw new IllegalArgumentException("Coordinates outside the world limits");
     if (getConfig().getStringList("disabled-worlds").contains(l.getWorld().getName()))
-      throw new IllegalArgumentException("Voyages désactivés dans ce monde");
+      throw new IllegalArgumentException("Travel is disabled in this world");
     try {
       Object border = l.getWorld().getClass().getMethod("getWorldBorder").invoke(l.getWorld());
       if (!(Boolean) border.getClass().getMethod("isInside", Location.class).invoke(border, l))
-        throw new IllegalArgumentException("Destination hors de la bordure");
+        throw new IllegalArgumentException("Destination outside the world border");
     } catch (NoSuchMethodException ignored) {
     } catch (ReflectiveOperationException e) {
-      throw new IllegalArgumentException("Impossible de vérifier la bordure", e);
+      throw new IllegalArgumentException("Cannot check the world border", e);
     }
   }
 
@@ -420,7 +425,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     l.getChunk().load();
     if (getConfig().getBoolean("require-safe-landing", true) && !safe(l))
       throw new IllegalArgumentException(
-          "Atterrissage dangereux : deux blocs libres et un sol solide requis");
+          "Unsafe landing: two clear blocks above solid ground are required");
   }
 
   static boolean safe(Location l) {
@@ -444,19 +449,18 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         || journeys.containsKey(p.getUniqueId())
         || p.isInsideVehicle()
         || p.isDead()
-        || p.isSleeping()) throw new IllegalArgumentException("Impossible de démarrer maintenant");
-    if (journeys.size() >= maxDragons)
-      throw new IllegalArgumentException("Tous les dragons sont occupés");
+        || p.isSleeping()) throw new IllegalArgumentException("Cannot start a journey right now");
+    if (journeys.size() >= maxDragons) throw new IllegalArgumentException("All dragons are busy");
     Long next = cooldowns.get(p.getUniqueId());
     if (next != null && System.currentTimeMillis() < next)
-      throw new IllegalArgumentException("Attends avant le prochain voyage");
+      throw new IllegalArgumentException("Wait before starting another journey");
     if (store.data.isConfigurationSection("recovery." + p.getUniqueId())) {
       recover(p);
       if (store.data.isConfigurationSection("recovery." + p.getUniqueId()))
-        throw new IllegalArgumentException("Récupération du vol précédent nécessaire");
+        throw new IllegalArgumentException("Your previous flight must be recovered first");
     }
     if (stops.isEmpty() || stops.size() > maxPoints)
-      throw new IllegalArgumentException("Nombre d'étapes invalide");
+      throw new IllegalArgumentException("Invalid waypoint count");
     Location origin = p.getLocation().clone(), landing = stops.get(stops.size() - 1).clone();
     validatePoint(origin);
     validateLanding(landing);
@@ -464,7 +468,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     for (Location l : stops) {
       validatePoint(l);
       if (!world.equals(l.getWorld()))
-        throw new IllegalArgumentException("Les étapes doivent rester dans le même monde");
+        throw new IllegalArgumentException("All waypoints must remain in the same world");
     }
     if (getConfig().getBoolean("station-only", false) && !p.hasPermission("dragontravel.admin")) {
       boolean nearby = false;
@@ -474,11 +478,11 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         if (l != null && l.getWorld().equals(origin.getWorld()) && l.distance(origin) <= radius)
           nearby = true;
       }
-      if (!nearby) throw new IllegalArgumentException("Rejoins une station pour décoller");
+      if (!nearby) throw new IllegalArgumentException("Go to a station to take off");
     }
     boolean cross = !origin.getWorld().equals(world);
     if (cross && !getConfig().getBoolean("allow-cross-world", false))
-      throw new IllegalArgumentException("Voyages entre mondes désactivés");
+      throw new IllegalArgumentException("Travel between worlds is disabled");
     Location departure = cross ? world.getSpawnLocation().clone() : origin.clone();
     validatePoint(departure);
     List<FlightPath.Point> points = new ArrayList<FlightPath.Point>();
@@ -489,11 +493,11 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
             : FlightPath.cruise(
                 point(departure), points, Math.min(altitude, world.getMaxHeight() - 16));
     if (path.length() > maxDistance || path.length() / speed > maxSeconds)
-      throw new IllegalArgumentException("Trajet trop long");
+      throw new IllegalArgumentException("Journey is too long");
     JourneyStartEvent event = new JourneyStartEvent(p, origin, landing, label);
     Bukkit.getPluginManager().callEvent(event);
     if (event.isCancelled())
-      throw new IllegalArgumentException("Voyage refusé par la protection du serveur");
+      throw new IllegalArgumentException("Journey denied by server protection");
     String key = "recovery." + p.getUniqueId();
     TravelStore.put(store.data, key, origin);
     store.save();
@@ -501,22 +505,22 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     Fare fare = null;
     try {
       if (cross && !teleport(p, departure))
-        throw new IllegalArgumentException("Transition vers le monde refusée");
-      dragon = adapter.spawn(departure, getConfig().getString("dragon-name", "Dragon Reforged"));
+        throw new IllegalArgumentException("World transition denied");
+      dragon = adapter.spawn(departure, getConfig().getString("dragon-name", "Reforged Dragon"));
       fare = Fare.charge(this, p);
       if (!adapter.mount(dragon, p)
           || p.getVehicle() == null
           || !p.getVehicle().getUniqueId().equals(dragon.getUniqueId()))
-        throw new IllegalArgumentException("La montée sur le dragon a été refusée");
+        throw new IllegalArgumentException("Mounting the dragon was denied");
       Journey j = new Journey(p, origin, landing, path, dragon, label, fare);
       journeys.put(p.getUniqueId(), j);
       tell(
           p,
-          "Décollage vers "
+          "Taking off for "
               + label
               + " (~"
               + (int) Math.ceil(path.length() / speed)
-              + " s). /dt stop pour revenir au départ");
+              + " s). Use /dt stop to return to the departure point");
       return j;
     } catch (Exception e) {
       if (dragon != null) dragon.remove();
@@ -546,11 +550,11 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
             || j.player.getVehicle() == null
             || !j.player.getVehicle().getUniqueId().equals(j.dragon.getUniqueId())
             || j.player.isSneaking()) {
-          finish(j, false, "Vol interrompu", true);
+          finish(j, false, "Flight interrupted", true);
           continue;
         }
         if (j.ticks > maxSeconds * 20) {
-          finish(j, false, "Durée maximale atteinte", true);
+          finish(j, false, "Maximum journey duration reached", true);
           continue;
         }
         j.distance = Math.min(j.path.length(), j.distance + speed / 20);
@@ -565,12 +569,12 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         rider.setPitch(j.player.getLocation().getPitch());
         if (rider.getBlock().getType().isSolid()
             || rider.clone().add(0, 1, 0).getBlock().getType().isSolid()) {
-          finish(j, false, "Obstacle sur l'itinéraire", true);
+          finish(j, false, "Obstacle on the route", true);
           continue;
         }
         adapter.move(j.dragon, l);
         adapter.move(j.player, rider);
-        if (j.distance >= j.path.length()) finish(j, true, "Arrivée à " + j.label, false);
+        if (j.distance >= j.path.length()) finish(j, true, "Arrived at " + j.label, false);
         else if (j.ticks % progressTicks == 0)
           tell(
               j.player,
@@ -582,7 +586,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
                   + " s");
       } catch (Exception e) {
         getLogger().log(java.util.logging.Level.WARNING, "Journey failed", e);
-        finish(j, false, "Vol arrêté en sécurité", true);
+        finish(j, false, "Flight stopped safely", true);
       }
     }
   }
@@ -600,14 +604,14 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
       if (arrived) validateLanding(dest);
       if (j.player.isOnline()) {
         if (!teleport(j.player, dest))
-          throw new IllegalArgumentException("Téléportation de sortie refusée");
+          throw new IllegalArgumentException("Dismount teleport denied");
         store.data.set("recovery." + j.player.getUniqueId(), null);
         store.save();
       }
     } catch (Exception ex) {
       arrived = false;
       refund = true;
-      reason = "Atterrissage annulé, retour au départ";
+      reason = "Landing cancelled; returning to the departure point";
       if (j.player.isOnline() && teleport(j.player, j.origin))
         try {
           store.data.set("recovery." + j.player.getUniqueId(), null);
@@ -656,7 +660,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     if (!store.data.isConfigurationSection(key)) return;
     Location origin = TravelStore.get(store.data, key);
     if (origin == null) {
-      tell(p, "Monde du départ indisponible : contacte un administrateur");
+      tell(p, "Departure world unavailable: contact an administrator");
       return;
     }
     origin.getChunk().load();
@@ -666,7 +670,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
       try {
         store.data.set(key, null);
         store.save();
-        tell(p, "Voyage interrompu récupéré : retour au départ");
+        tell(p, "Interrupted journey recovered: returned to the departure point");
       } catch (IOException e) {
         getLogger().warning(e.toString());
       }
@@ -703,7 +707,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
   @EventHandler
   public void quit(PlayerQuitEvent e) {
     Journey j = journeys.get(e.getPlayer().getUniqueId());
-    if (j != null) finish(j, false, "Déconnexion", true);
+    if (j != null) finish(j, false, "Player disconnected", true);
     UUID id = e.getPlayer().getUniqueId();
     editors.remove(id);
     cooldowns.remove(id);
@@ -715,7 +719,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     if (!internalTeleports.contains(e.getPlayer().getUniqueId())
         && journeys.containsKey(e.getPlayer().getUniqueId())) {
       e.setCancelled(true);
-      tell(e.getPlayer(), "/dt stop avant une téléportation");
+      tell(e.getPlayer(), "Use /dt stop before teleporting");
     }
   }
 
@@ -789,8 +793,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     try {
       String action = s.getLine(1).toLowerCase(Locale.ROOT), id = FlightPath.id(s.getLine(2));
       boolean route = action.equals("flight");
-      if (!route && !action.equals("travel"))
-        throw new IllegalArgumentException("Panneau invalide");
+      if (!route && !action.equals("travel")) throw new IllegalArgumentException("Invalid sign");
       requireDestination(e.getPlayer(), id, route);
       Location l = TravelStore.get(store.data, "stations." + id);
       start(e.getPlayer(), route ? store.route(id) : Collections.singletonList(l), id, route);
@@ -826,7 +829,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
       ItemStack item = new ItemStack(Material.ENDER_PEARL);
       org.bukkit.inventory.meta.ItemMeta meta = item.getItemMeta();
       meta.setDisplayName(ChatColor.LIGHT_PURPLE + entries.get(i));
-      meta.setLore(Arrays.asList("Clique pour voyager à dos de dragon"));
+      meta.setLore(Arrays.asList("Click to travel on a dragon"));
       item.setItemMeta(meta);
       menu.inventory.setItem(i - page * 45, item);
     }
@@ -920,7 +923,7 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
   void importLegacy(CommandSender sender) throws Exception {
     File old = new File(getDataFolder().getParentFile(), "DragonTravel/databases");
     if (!old.isDirectory())
-      throw new IllegalArgumentException("Dossier plugins/DragonTravel/databases introuvable");
+      throw new IllegalArgumentException("Directory plugins/DragonTravel/databases not found");
     int stations = 0, routes = 0;
     YamlConfiguration s = new YamlConfiguration();
     File f = new File(old, "stations.yml");
@@ -948,9 +951,9 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
         List<Location> points = new ArrayList<Location>();
         for (String text : root.getStringList(id + ".waypoints")) {
           String[] v = text.split("%");
-          if (v.length != 4) throw new IllegalArgumentException("Étape invalide : " + id);
+          if (v.length != 4) throw new IllegalArgumentException("Invalid waypoint: " + id);
           World w = Bukkit.getWorld(v[3]);
-          if (w == null) throw new IllegalArgumentException("Monde manquant : " + v[3]);
+          if (w == null) throw new IllegalArgumentException("Missing world: " + v[3]);
           Location l =
               new Location(
                   w, Double.parseDouble(v[0]), Double.parseDouble(v[1]), Double.parseDouble(v[2]));
@@ -966,6 +969,6 @@ public final class DragonTravelReforged extends JavaPlugin implements Listener, 
     store.save();
     tell(
         sender,
-        "Import : " + stations + " stations, " + routes + " routes. Fichiers anciens conservés.");
+        "Imported: " + stations + " stations, " + routes + " routes. Legacy files preserved.");
   }
 }
