@@ -1,0 +1,11 @@
+* text=auto
+*.java text eol=lf
+*.py text eol=lf
+*.cjs text eol=lf
+*.yml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.ps1 text eol=crlf
+*.xml text eol=lf
+# Keep historical whitespace intact while checking the Reforged implementation.
+legacy/** -whitespace
